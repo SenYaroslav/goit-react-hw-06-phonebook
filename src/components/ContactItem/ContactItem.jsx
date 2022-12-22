@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import css from './PhoneBook.module.css';
+import css from './ContactItem.module.css';
 
 const ContactItem = ({ id, name, number, handleDeleteBtn }) => {
   return (

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import css from './PhoneBook.module.css';
+import css from './ContactForm.module.css';
 
 const ContactForm = ({ formSubmitHandler }) => {
   const [name, setName] = useState('');
