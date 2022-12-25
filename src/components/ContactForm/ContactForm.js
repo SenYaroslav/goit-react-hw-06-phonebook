@@ -10,6 +10,7 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
   const contactsSelector = useSelector(contacts);
+  const contactsArr = contactsSelector.contacts;
 
   const handleChange = e => {
     if (e.currentTarget.name === 'name') {
@@ -23,7 +24,7 @@ const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const nameList = contactsSelector.map(contact => contact.name);
+    const nameList = contactsArr.map(contact => contact.name);
 
     if (nameList.includes(name)) {
       alert(`${name} is already in contacts`);
