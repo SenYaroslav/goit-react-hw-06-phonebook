@@ -1,11 +1,15 @@
-import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { contacts } from 'redux/contactsSlice';
 
-const ContactForm = ({ formSubmitHandler }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+  const contactsSelector = useSelector(contacts);
 
   const handleChange = e => {
     if (e.currentTarget.name === 'name') {
@@ -19,9 +23,14 @@ const ContactForm = ({ formSubmitHandler }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const id = nanoid(7);
-    formSubmitHandler({ id, name, number });
-    reset();
+    const nameList = contactsSelector.map(contact => contact.name);
+
+    if (nameList.includes(name)) {
+      alert(`${name} is already in contacts`);
+    } else {
+      dispatch(addContact(name, number));
+      reset();
+    }
   };
 
   const reset = () => {
@@ -35,7 +44,7 @@ const ContactForm = ({ formSubmitHandler }) => {
         Name
         <input
           className={css.phoneBook__input}
-          type="t ext"
+          type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -65,7 +74,3 @@ const ContactForm = ({ formSubmitHandler }) => {
 };
 
 export default ContactForm;
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func,
-};
